@@ -14,7 +14,7 @@ function(input, output) {
   output$pophour = renderPlotly({
     
     tr_orders %>% 
-      filter(order_dow == input$dayofweek) %>%
+      filter(parts_of_day == input$partofday) %>%
       ggplot(.,aes(x=order_hour_of_day)) + 
       geom_bar(fill="darkolivegreen3") + 
       labs(title="Popular hour of the day for placing order",

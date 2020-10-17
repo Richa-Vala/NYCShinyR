@@ -57,19 +57,25 @@ shinyUI(
         #Explore####
         tabItem(tabName = "explore",
                   tabsetPanel(
-                    tabPanel("Popular Day of Week",
-                             fluidRow(
-                               column(8, plotlyOutput("popday", width = "600px", height = "600px"))
-                             )
+                    tabPanel(
+                      "Popular Day of Week",
+                      fluidRow(
+                        column(8, plotlyOutput("popday", width = "600px", height = "600px"))
+                      ),
+                      fluidRow(
+                        h2("Summary"),
+                        "To be filled"
+                      )
                     ),  
                     
-                    tabPanel("Popular hour of Week",
-                             fluidRow(
-                               column(8, plotlyOutput("pophour",width = "600px",height = "600px"))
-                             ),
-                             fluidRow(
-                               selectizeInput('dayofweek', 'Please select a day of the week:', 0:6)
-                             )
+                    tabPanel(
+                      "Popular hour of Week",
+                      fluidRow(
+                        column(8, plotlyOutput("pophour",width = "600px",height = "600px"))
+                      ),
+                      fluidRow(
+                        selectizeInput('partofday', 'Please select time of day:', c("Morning","Afternoon", "Evening"))
+                      )
                     )
                     # tabPanel("Table",
                     #          fluidRow(
