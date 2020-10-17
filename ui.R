@@ -2,9 +2,10 @@
 shinyUI(
   dashboardPage(
     #header + skin + sidebar panel#### 
-    skin = 'yellow',
+    skin = 'green',
     dashboardHeader(
-      title = "Instacart"
+      title = "Instacart Marke Basket Analysis",
+      titleWidth = 450
     ),
     #sidebar panel 
     dashboardSidebar(
@@ -13,7 +14,6 @@ shinyUI(
       sidebarMenu(
         menuItem("Introduction", tabName = "intro", icon = icon("dove")),
         menuItem("Exploration/Analysis", tabName = "explore", icon = icon("map")),
-        # selectizeInput('popular',"Popular day", choices = c("aaaa","bbbb")),
         menuItem("Conclusion", tabName = "conc", icon = icon("box-open")),
         menuItem("Data", tabName = "data", icon = icon("database")),
         menuItem("Author", tabName = "self", icon = icon("user-graduate"))
@@ -28,37 +28,29 @@ shinyUI(
           tabName = 'intro',
           fluidPage(
             box(
-              background = 'light-blue',
-              h2('Exploratory Data Analysis and Visualization - Which products will an Instacart consumer purchase again?'),
-              h3('Market Basket Analysis is one of the key techniques used by large retailers to uncover associations between items.'),
-              tags$p("It works by looking for combinations of items that occur together frequently in transactions."),#plotlyOutput("lineplot"),
-              h3('Facts about Plastic Pollution We Absolutely Need to Know: '),
-              tags$p("To put it another way, it allows retailers to identify relationships between the items that people buy."),
-              tags$p("Instacart lets you shop from local grocery stores online, then sends a “personal shopper” to fulfill and deliver your order to you the same day"),
-              tags$p("Unlike other grocery delivery services, the company doesn’t stockpile fresh produce in a massive warehouse."),
-              tags$p("Instead, their shoppers shop at major grocery stores in your area like Kroger, Shaw’s, and Costco through its website,"),
-              tags$p("and then sends your order to one of its part-time employees.This personal shopper goes to the store,"),
-              tags$p("picks up everything on your list, and then drives it to you in their own car. Think of it as the Uber of grocery delivery!"),
-              # img(src=""
-              #     ,width="50%"),
-              h3('experience while partnering with iconic retailers to offer more selection and value to customers,” said Apoorva Mehta, Founder and CEO of Instacart.'),
-              #tags$iframe(src="https://www.youtube.com/embed/ju_2NuK5O-E",
-              #           width="653",height="367"),
-              h3('Variables of Dataset:'),
-              #tags$p(', Population, Coastal Population, Economic Development, Continent, Geographical Feature, GDP Per Capita, Plastic Waste Generation, Plastic Waste Per Capita, Mismanaged Plastic Generation, Mismanaged Plastic Per Capita, Mismanaged Plastic Share, Inadequately Managed Plastic Waste Share(Highest Risk), 2008-2010 Average GDP Per Capita Growth Rate, 3 Years GDP Growing Status'),
-              #tags$p("Note: Mismanaged waste: Material that is either littered or inadequately disposed (the sum of littered and inadequately disposed waste), which could eventually enter the ocean via inland waterways, wastewater outflows, and transport by wind or tides and has much higher risk of entering the ocean and contaminating the environment."),
-              # tags$p("      Inadequately managed waste: Waste is not formally managed and includes disposal in dumps or open, uncontrolled landfills, where it is not fully contained. Inadequately managed waste has high risk of polluting rivers and oceans. This does not include 'littered' plastic waste, which is approximately 2% of total waste."),
-              h3('Goal of the analysis: Discovering relationships between features of countries and plastic pollution.'),
-              tags$p('<- Click items on the side bar to explore'),
-              width = 12
-            )
+              tags$div(h1("Goal : To briefly explore the dataset, highlight the patternsand why it is important to Instacart")),
+              tags$p(
+                HTML('<p> Market Basket Analysis is one of the key techniques used by large retailers to uncover associations between items.
+                     Instacart, a grocery ordering and delivery app, allows users to place grocery order through their website or app which are then fulfilled
+                     by a personal shopper.In 2017 Instacart open-sourced 3 million grocery orders. This anonymized dataset contains a sample of over 3 million grocery
+                     orders from more than 200,00 Instacart users. Instacart’s data science team plays a big part in providing this delightful shopping experience. 
+                     Currently they use transactional data to develop models that predict which products a user will buy again, try for the first time, or add to their 
+                     cart next during a session.The users are anonymized. There’s no demographics data — no gender, age. Instacart 
+                     explained on its blog post that it’s too hard to protect privacy of users if such data is included. In real life, Instacart also
+                     does not collect such data, but does use code scripts to analyze and infer gender from usernames.</p>'),
+                
+                tags$p("reference: https://tech.instacart.com/3-million-instacart-orders-open-sourced-d40d29ead6f2"),
+                tags$p("reference: https://www.kaggle.com/c/instacart-market-basket-analysis")
+                
+              ) 
           )
+            )
         ),
         #Explore####
         tabItem(tabName = "explore",
                   tabsetPanel(
                     tabPanel(
-                      "Popular Day of Week",
+                      "When people order most?",
                       fluidRow(
                         column(8, plotlyOutput("popday", width = "600px", height = "600px"))
                       ),
@@ -69,20 +61,42 @@ shinyUI(
                     ),  
                     
                     tabPanel(
-                      "Popular hour of Week",
+                      "What day people order most?",
                       fluidRow(
                         column(8, plotlyOutput("pophour",width = "600px",height = "600px"))
                       ),
                       fluidRow(
                         selectizeInput('partofday', 'Please select time of day:', c("Morning","Afternoon", "Evening"))
+                      ),
+                      fluidRow(
+                        h2("Summary"),
+                        "To be filled"
                       )
-                    )
-                    # tabPanel("Table",
-                    #          fluidRow(
-                    #            DT::dataTableOutput('table')
-                    #            )
-                    # )
-                  )          
+                    ),
+                   
+                   tabPanel(
+                      "When do they order again?",
+                      fluidRow(
+                        column(8, plotlyOutput("orderagain",width = "600px",height = "600px"))
+                      ),
+                      fluidRow(
+                        h2("Summary"),
+                        "To be filled"
+                      )
+                    ),
+                   
+                   tabPanel(
+                     "What is the proportion of the repeat products users prefer?",
+                     fluidRow(
+                       column(6, plotlyOutput("repeatprod1",width = "600px",height = "600px")),
+                       column(4, plotlyOutput("repeatprod2",width = "600px",height = "600px"))
+                       ),
+                     fluidRow(
+                       h2("Summary"),
+                       "To be filled"
+                     )
+                   )
+              )                 
         ),
         #Conclusion####
         tabItem(tabName = "conc",
