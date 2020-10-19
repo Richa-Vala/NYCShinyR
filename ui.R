@@ -13,10 +13,10 @@ shinyUI(
                        ),
       sidebarMenu(
         menuItem("Introduction", tabName = "intro", icon = icon("dove")),
+        menuItem("Data", tabName = "data", icon = icon("database")),
         menuItem("Exploration/Analysis", tabName = "explore", icon = icon("map")),
         menuItem("Conclusion", tabName = "conc", icon = icon("box-open")),
-        menuItem("Data", tabName = "data", icon = icon("database")),
-        menuItem("Author", tabName = "self", icon = icon("user-graduate"))
+        menuItem("Author", tabName = "self", icon = icon("user-edit"))
       )
     ),
     
@@ -59,24 +59,25 @@ shinyUI(
                         column(8, plotlyOutput("popday", width = "600px", height = "600px"))
                       ),
                       fluidRow(
-                        h2("Summary"),
-                        "To be filled"
+                        h2("Insight"),
+                        "People do more shopping on day 0 and day 1. There is not a significant difference 
+                        between other days of the week either."
                       )
                     ),  
                     
                     tabPanel(
-                      "Does order volume change throughout the day?",
+                      "Does order volume changes throughout the day?",
                       fluidRow(
                         column(6, plotlyOutput("pophour",width = "600px",height = "600px")),
                         column(4, plotlyOutput("stpart",width = "600px",height = "600px"))
                       ),
                       fluidRow(
-                        selectizeInput('partofday', 'Please select time of day:', c("Morning","Afternoon", "Evening"))
+                       selectizeInput('partofday', 'Please select time of day:', c("Morning","Afternoon", "Evening"))
                       ),
                       fluidRow(
-                        h2("Summary"),
-                        "People do more shopping on weekend (assuming 1 for Saturday and 0 for Synday). The 
-                        volume of order increases sharply from early morning till 11 am."
+                        h2("Insight"),
+                        "The volume of order increases sharply from early morning and majority of the purchases
+                        are made between 9 am and 4 pm."
                       )
                     ),
                    
@@ -86,42 +87,46 @@ shinyUI(
                         column(8, plotlyOutput("orderagain",width = "600px",height = "600px"))
                       ),
                       fluidRow(
-                        h2("Summary"),
-                        "Generally, the users place their order at day 5 or at day 30"
+                        h2("Insight"),
+                        "Generally, the customers place their order either weekly on days 4,7,or 30 i.e.
+                         monthly."
                       )
                     ),
                    
                    tabPanel(
-                     "What is the count/poportion of the repeat products?",
+                     "How large are each order?",
                      fluidRow(
-                       column(6, plotlyOutput("repeatprod1",width = "600px",height = "600px")),
-                       column(4, plotlyOutput("repeatprod2",width = "600px",height = "600px"))
-                       ),
+                       column(6, plotlyOutput("numitems",width = "600px",height = "600px"))
+                     ),
                      fluidRow(
-                       h2("Summary"),
-                       "To be filled"
+                       h2("Insight"),
+                       "We can observe from the plot that customers usually order between 4-7 products."
                      )
                    ),
                    
-                  tabPanel(
-                     "How large are orders?",
+                   tabPanel(
+                     "How many reorders and repeat items?",
                      fluidRow(
-                       column(6, plotlyOutput("numitems",width = "600px",height = "600px"))
+                       column(6, plotlyOutput("repeatprod1",width = "600px",height = "600px")),
+                       column(4, DT::dataTableOutput("repeatprod2",width = "400px",height = "600px"))
                        ),
                      fluidRow(
-                       h2("Summary"),
-                       "To be filled"
+                       h2("Insight"),
+                       "Around 60% are reorders. The highest proportion of 
+                       top repeated items are dairy products"
                      )
                    ),
+                   
+                  
               
                   tabPanel(
-                    " What are best selling products?",
+                    " What are the best selling products?",
                     fluidRow(
                       column(6, plotlyOutput("best",width = "600px",height = "600px"))
                       ),
                     fluidRow(
-                      h2("Summary"),
-                      "Their first top 10 selling items are fresh produce, especially those 
+                      h2("Insight"),
+                      "We can observe that the first top 10 selling products are fresh produce, especially those 
                        which are organic."
                     )
                   ),
@@ -138,7 +143,7 @@ shinyUI(
                                      selected=NULL)
                      ),
                     fluidRow(
-                      h2("Summary"),
+                      h2("Insight"),
                       "The fresh fruits and vegetables from the produce department are more popular."
                     )
                   )
@@ -149,15 +154,28 @@ shinyUI(
         #Conclusion####
         tabItem(tabName = "conc",
                 fluidRow(box(
-                  background = 'light-blue',
-                  h2("Conclusions"),
-                  tags$p("- To be filled"),
-                  tags$p("To be filled "),
-                  tags$p("To be filled "),
-                  tags$p("To be filled "),
-                  tags$p("To be filled"),
-                  width = 12)
-                )
+                  h2("Conclusions:"),
+                  tags$p("- Most orders are on Saturday and Sunday."),
+                  tags$p("- The peak time is between 9 am - 4pm and slowly starts to decrease."),
+                  tags$p("- The reordering spikes can be seen mostly at days 4, 7 or 30."),
+                  tags$p("- Around 60% are reorders.The highest proportion of 
+                            top repeated items are dairy products."),
+                  tags$p("- Customers usually order between 4-6 products."),
+                  tags$p("- First top 10 selling items are fresh produce."),
+                  tags$p("- The fresh fruits and vegetables from the produce department are 
+                            more popular."),
+                  width = 12),
+                  box(
+                    h2("Future Analysis:"),
+                    tags$p("- A dataset of this size can be further explored to draw out richer insights to help make better informed decisions."),
+                    tags$p("- Whether customers buy different products at different times or not."),
+                    tags$p("- How many orders were given after how many days and what those  
+                              products are?"),
+                    tags$p("- When days of the week, the top selling products mostly get purchased?"),
+                    tags$p("- Which products are likely to be purchased in a combination of two 
+                              or move. ")
+                  )
+                ),
         ),
         #data####
         tabItem(tabName = "data",
@@ -200,25 +218,21 @@ shinyUI(
         #self-intro####
         tabItem(tabName = "self",
                 fluidRow(
-                  column(4,
-                         img(src="./richavala.jpg",
-                             width=500,
-                             height=600)
-                  ),
-                  column(8,box(
-                    background = 'blue',
+                   box(
                     h2("Richa Vala"),
-                    tags$p("To be filled "),
-                    tags$a(href = 'https://www.linkedin.com/in/richavala/'),
+                    tags$p("My name is Richa Vala. I graduated with a Master of Engineering 
+                    Degree from University of Illinois. Before coming to NYCDSA, 
+                    I was an owner of a service-based business."),
+                    (href = 'https://www.linkedin.com/in/richavala'),
+                    br(),
+                    (img(src = "richavala.jpg",height="50%", width="50%", align="center")),
                     width = 6,
-                    height = 600)))
-             )
+                   height = 500,
+                   )
+                )
+              )  
         
-      
-      
-     )
+         )
+      )
     )
-    
-    
-  )
  )
