@@ -1,3 +1,4 @@
+# Load R libraries 
 library(knitr)
 library(tidyr)
 library(tidyverse)
@@ -60,24 +61,16 @@ orders <- orders%>% mutate(order_hour_of_day=as.factor(order_hour_of_day))
 levels(orders$order_dow)  # sunday is 0, Monday is 1
 
 #Missing Values
-
 sum(is.na(tr_orders))
-# #To find all the rows in a data frame with at least one NA::multiple ways
-# which(is.na(orders$days_since_prior_order))
-# unique(unlist(lapply(orders, function(x) which (is.na(x)))))
-# colSums(is.na(orders))
-# orders[!complete.cases(orders),]
-# visualize missing values using VIM package
-# aggr(orders)
 
-
-###############################################################################################################3
+###############################################################################################################
 
 # Summary Statistics
 # Original Data
 
 tot_users = orders %>% summarise(.,count_tot = length(unique(user_id)))
 tot_users
+
 # Range of order_number
 tmp = orders %>% filter(.,order_number != 1)
 range = max(tmp$order_number) -min(tmp$order_number)
@@ -94,11 +87,7 @@ tot_order
 
 #******with trimmed data******#
 
-# Plot#5 - Popular department name
-
-
-
-
+# Popular department name
 tmp = products %>% left_join(department)
 tmp = tmp %>% left_join(order_products_train)
 x = tmp %>% group_by(., by = c(product_id.department_id)) %>% summarise
@@ -107,14 +96,12 @@ x = tmp %>% group_by(., by = c(product_id.department_id)) %>% summarise
 dt_table <- tr_orders%>%kable(.,)%>%head(.,n=10)
 dt_table
 
-# What day people place most orders -- Plot # 2
+# What day people place most orders 
 g <- ggplot(data = tr_orders,aes(x=order_dow))
 g+geom_bar(fill="darkolivegreen3")+labs(title="Popular day of week for placing order by users",
                                         x="Day of Week",
                                         y="count")
 ggsave("dayofweek.png")
-
-
 
 g <- ggplot(data = tr_orders,aes(x=order_hour_of_day))
 g+geom_bar(fill="darkolivegreen3")+labs(title="Popular hour of the day for placing order by users",
@@ -124,17 +111,11 @@ df_hourtable <- tr_orders%>%group_by(.,order_hour_of_day)%>%summarise(hour_count
 df_hour<-kable(df_hourtable)
 
 ####Number of products per order
-
-
 g <- ggplot(data = df_num,aes(x=cart_items))
 #zoom <- coord_cartesian(xlim=c(0,80)) 
 g+geom_histogram(stat = "count", fill="darkolivegreen3") +labs(title="Number of Products per order",
                                       x="Number of orders",
                                       y="count")
-
-
-
-
 
 ##### Best Selling Products - Top 10
 df <- order_products_train %>% group_by(.,product_id)%>%summarise(.,n_items = n()) %>%top_n(.,10,n_items)%>%
@@ -146,9 +127,6 @@ dt_table <- kable(tmp)  ## for dataTable
 df%>%ggplot(aes(x=reorder(product_name,-n_items),y=n_items))+
   geom_bar(stat="identity",fill="red") + 
   theme(axis.text.x=element_text(angle=90, hjust=1),axis.title.x = element_blank())
-
-
-
 
 ##### Worst Selling Products - Bottom 10 , from tally() , got 7884 sold once 
 
@@ -179,10 +157,10 @@ wordcloud2(tmp1, size = 1, minSize = 1, gridSize =  0,
            rotateRatio = 0.4, shape = 'circle', ellipticity = 0.65,
            widgetsize = NULL, figPath = NULL, hoverFunction = NULL)
 
-# doesn't make sense to use bar chart for worst 10
+
 ###########################################################
 
-#########  How many orders were ordered previously too ########
+#########  How many orders were ordered previously too?
 
 #tr_orderproducts <- tr_orderproducts%>%mutate(reordered = as.factor((reordered)))
 #levels(tr_orderproducts) <- gsub("0", "no", levels(tr_orderproduct$reordered,c('1'="yes", '0'="no"))
