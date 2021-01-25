@@ -1,16 +1,14 @@
-# Meteorite visuatlization - UI File
+# UI File
 shinyUI(
-  dashboardPage(
-    #header + skin + sidebar panel#### 
+  dashboardPage( 
     skin = 'green',
     dashboardHeader(
-      title = "Instacart Marke Basket Analysis",
+      title = "Instacart Market Basket Exploratory Analysis",
       titleWidth = 450
     ),
     #sidebar panel 
     dashboardSidebar(
-      sidebarUserPanel("Richa Vala"
-                       ),
+      sidebarUserPanel("Richa Vala"),
       sidebarMenu(
         menuItem("Introduction", tabName = "intro", icon = icon("dove")),
         menuItem("Data", tabName = "data", icon = icon("database")),
@@ -19,8 +17,6 @@ shinyUI(
         menuItem("Author", tabName = "self", icon = icon("user-edit"))
       )
     ),
-    
-    #Introduction####
     dashboardBody(
       tabItems(
         #Intro
@@ -28,19 +24,20 @@ shinyUI(
           tabName = 'intro',
           fluidPage(
             box(
-              #image = "https://content.fortune.com/wp-content/uploads/2015/01/instacart-web1.jpg?resize=1200,600"
+              
               tags$div(h2("Goal : To briefly explore the dataset, highlight the patterns and why it is important to Instacart")),
               br(),
               tags$p(
-                HTML('<p> Market Basket Analysis is one of the key techniques used by large retailers to uncover associations between items.
-                     Instacart, a grocery ordering and delivery app, allows users to place grocery order through their website or app which are then fulfilled
+                HTML('<p>Instacart, a grocery ordering and delivery app, allows users to place grocery order through their website or app which are then fulfilled
                      by a personal shopper.In 2017 Instacart open-sourced 3 million grocery orders. This anonymized dataset contains a sample of over 3 million grocery
                      orders from more than 200,00 Instacart users.
                      Instacart’s data science team plays a big part in providing this delightful shopping experience. 
                      Currently they use transactional data to develop models that predict which products a user will buy again, try for the first time, or add to their 
                      cart next during a session.The users are anonymized. There’s no demographics data — no gender, age. Instacart 
                      explained on its blog post that it’s too hard to protect privacy of users if such data is included. In real life, Instacart also
-                     does not collect such data, but does use code scripts to analyze and infer gender from usernames.<p>'),
+                     does not collect such data, but does use code scripts to analyze and infer gender from usernames.
+                     The main purpose of this app is to provide a general overview of Instacart. Through this visualization,exploratory Data analysis was 
+                     performed in order to derive insights from customer data.<p>'),
                 br(),
                 br(),
                 tags$p("reference: https://tech.instacart.com/3-million-instacart-orders-open-sourced-d40d29ead6f2"),
@@ -50,7 +47,7 @@ shinyUI(
           )
             )
         ),
-        #Explore####
+        
         tabItem(tabName = "explore",
                   tabsetPanel(
                     tabPanel(
@@ -220,9 +217,9 @@ shinyUI(
                 fluidRow(
                    box(
                     h2("Richa Vala"),
-                    tags$p("My name is Richa Vala. I graduated with a Master of Engineering 
-                    Degree from University of Illinois. Before coming to NYCDSA, 
-                    I was an owner of a service-based business."),
+                    tags$p("My name is Richa Vala. I graduated with a Master of Science in Bioinformatics Engineering 
+                    from University of Illinois at Chicago. I have multiple years of experience analyzing sales
+                    and marketing data from previous."),
                     (href = 'https://www.linkedin.com/in/richavala'),
                     br(),
                     (img(src = "richavala.jpg",height="50%", width="50%", align="center")),
